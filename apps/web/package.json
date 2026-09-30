@@ -1,0 +1,29 @@
+{
+  "name": "@pkgwarden/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
+  },
+  "scripts": {
+    "traces": "tsx scripts/record-traces.ts",
+    "dev": "tsx scripts/record-traces.ts && next dev --webpack",
+    "build": "tsx scripts/record-traces.ts && next build --webpack"
+  },
+  "dependencies": {
+    "@pkgwarden/contracts": "workspace:*",
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@pkgwarden/engine": "workspace:*",
+    "@pkgwarden/review": "workspace:*",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3"
+  }
+}

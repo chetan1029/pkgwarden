@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      # Installs exactly the pnpm version in package.json's packageManager field.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # The same command a person runs before pushing.
+      - run: pnpm run ci:check
+      - run: pnpm run build
+
+      # pkgwarden reviews its own dependency changes on every PR, with rules only, and fails on a block.
+      - name: Review this PR's dependency changes
+        if: github.event_name == 'pull_request'
+        run: |
+          if git show "origin/${{ github.base_ref }}:pnpm-lock.yaml" > "$RUNNER_TEMP/base-pnpm-lock.yaml" 2>/dev/null; then
+            node packages/cli/dist/main.mjs diff "$RUNNER_TEMP/base-pnpm-lock.yaml" pnpm-lock.yaml --rules-only --fail-on block
+          else
+            echo "No lockfile on the base branch yet."
+          fi

@@ -1,0 +1,37 @@
+name: live evals
+
+# Runs the scenarios through the real models every night and keeps the results.
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Skips cleanly until an ANTHROPIC_API_KEY secret is added to the repository.
+      - name: Live evals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "No ANTHROPIC_API_KEY secret, so the live evals are skipped."
+            exit 0
+          fi
+          pnpm exec tsx evals/src/main.ts --live --out evals/results/latest.json
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('evals/results/latest.json') != ''
+        with:
+          name: eval-results
+          path: evals/results/latest.json

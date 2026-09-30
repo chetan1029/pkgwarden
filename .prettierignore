@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+.pkgwarden/
+pnpm-lock.yaml
+.next/
+out/
+apps/web/public/traces/
+next-env.d.ts

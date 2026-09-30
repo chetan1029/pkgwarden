@@ -1,0 +1,11 @@
+{
+  "name": "@pkgwarden/evals",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@pkgwarden/contracts": "workspace:*",
+    "@pkgwarden/engine": "workspace:*",
+    "@pkgwarden/review": "workspace:*"
+  }
+}

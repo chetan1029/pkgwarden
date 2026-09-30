@@ -1,0 +1,26 @@
+{
+  "name": "pkgwarden",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Review npm dependency changes with rules first and model judgment only when needed.",
+  "type": "module",
+  "bin": {
+    "pkgwarden": "./dist/main.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@pkgwarden/contracts": "workspace:*",
+    "@pkgwarden/engine": "workspace:*",
+    "@pkgwarden/review": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chetan1029/pkgwarden.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/chetan1029/pkgwarden#readme",
+  "license": "MIT",
+  "author": "Chetan Singh"
+}

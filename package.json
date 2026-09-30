@@ -1,0 +1,58 @@
+{
+  "name": "pkgwarden-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Agents that review npm dependency changes before they reach main.",
+  "engines": {
+    "node": ">=24.0.0 <25.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "packageManager": "pnpm@10.34.5",
+  "scripts": {
+    "pkgwarden": "tsx packages/cli/src/main.ts",
+    "web": "pnpm --filter @pkgwarden/web dev",
+    "build": "tsdown && pnpm --filter @pkgwarden/web build",
+    "build:cli": "tsdown",
+    "eval": "tsx evals/src/main.ts",
+    "eval:live": "tsx evals/src/main.ts --live",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit && tsc -p apps/web --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "depcheck": "depcruise packages apps evals --config .dependency-cruiser.cjs",
+    "ci:check": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run depcheck && pnpm run test && pnpm run eval"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.6",
+    "@typescript-eslint/eslint-plugin": "^8.70.1",
+    "@typescript-eslint/parser": "^8.70.1",
+    "dependency-cruiser": "^18.4.0",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chetan1029/pkgwarden.git"
+  },
+  "homepage": "https://github.com/chetan1029/pkgwarden#readme",
+  "license": "MIT",
+  "author": "Chetan Singh"
+}

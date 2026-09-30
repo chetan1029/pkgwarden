@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.pkgwarden/
+.DS_Store
+*.log
+*.tsbuildinfo
+.env
+evals/results/
+.next/
+out/
+next-env.d.ts
+apps/web/public/traces/
+# Local Claude Code settings (machine-specific paths)
+.claude/
